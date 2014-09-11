@@ -13,7 +13,7 @@ class CreateTutorsTable extends Migration {
 	public function up() {
 		Schema::create('tutors', function($table) {
 	        $table->increments('id');
-	        $table->string('email')->unique();
+	        $table->string('email');
 	        $table->string('name');
 	        $table->string('password');
 	        $table->timestamps();
