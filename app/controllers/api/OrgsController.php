@@ -86,7 +86,7 @@ class OrgsController extends BaseController {
 	 * @return Organisation The organisation with the given id.
 	 */
 	public function show(Organisation $org) {
-		$org->load(['tutors', 'attrs.parts']);
+		$org->load(['tutors', 'attrs.parts', 'learners']);
 		return Response::json($org);
 	}
 }
