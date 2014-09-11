@@ -1,4 +1,4 @@
-define(['beagle', './collection', './compositeView', './layoutView', './model'], function(beagle, Collection, CompositeView, LayoutView, Model, AttrsRouter, UsersRouter) {
+define(['beagle', './collection', './compositeView', './layoutView', './model'], function(beagle, Collection, CompositeView, LayoutView, Model) {
   return beagle.routes({
     '/edit/:attrid': function(params, path) {
       return params.app.content.show(new LayoutView({
