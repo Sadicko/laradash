@@ -22,9 +22,10 @@ Route::get('logout', array(
 
 // API.
 Route::group(['prefix'=>'api', 'before'=>'api.auth'], function () {
-	Route::get('test', function(){
-		return Response::json('API test', 200);;
+	Route::get('test', function () {
+		return Response::json('API test', 200);
 	});
+  Route::get('tutor', 'API\TutorsController@auth');
 	Route::model('organisations', 'Organisation');
 	Route::model('tutors', 'Tutor');
 	Route::model('attrs', 'Attr');

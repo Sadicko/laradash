@@ -6,6 +6,14 @@ use \Input, \Validator, \Response;
 class TutorsController extends BaseController {
 
 	/**
+	 * Constructs a controller.
+	 * This is used to authenticate the request for particular methods.
+	 */
+	public function __construct() {
+		$this->beforeFilter('auth', ['except'=>['index', 'show', 'auth']]);
+	}
+
+	/**
 	 * Gets accepted fields from the input.
 	 * @return AssocArray The accepted fields.
 	 */
@@ -91,6 +99,16 @@ class TutorsController extends BaseController {
 	 * @return Tutor The tutor with the given id.
 	 */
 	public function show(Organisation $org, Tutor $tutor) {
+		return Response::json($tutor);
+	}
+
+	/**
+	 * Gets the currently authenticated tutor.
+	 * @return Tutor The tutor currently authenticated via Basic Auth.
+	 */
+	public function auth() {
+		$email = \Request::getUser();
+		$tutor = Tutor::where('email', $email)->first();
 		return Response::json($tutor);
 	}
 }
