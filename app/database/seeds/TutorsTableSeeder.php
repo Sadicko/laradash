@@ -15,7 +15,7 @@ class TutorsTableSeeder extends Seeder {
 				$tutor = new Tutor([
 					'name' 		=> $faker->name,
 					'email' 	=> $faker->email,
-					'password' 	=> Hash::make('password')
+					'password' 	=> 'password'
 				]);
 
 				$tutor = $org->tutors()->save($tutor);

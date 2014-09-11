@@ -16,6 +16,10 @@ class Tutor extends \Eloquent {
 		return $this->belongsTo('Organisation');
 	}
 
+	public function setPasswordAttribute($password) {
+	    $this->attributes['password'] = Hash::make($password);
+	}
+
 	/**
 	 * The attributes excluded from the model's JSON form.
 	 *
