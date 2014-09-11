@@ -35,7 +35,7 @@ define([
       response.attrs = new AttrsCollection(response.attrs, {
         parent: self
       });
-      response.learners = new AttrsCollection(response.learners, {
+      response.learners = new LearnersCollection(response.learners, {
         parent: self
       });
       return response;
