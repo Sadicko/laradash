@@ -1,4 +1,11 @@
-define(['underscore', 'marionette', 'text!./layoutTemplate.html', './tutors/compositeView', './attributes/compositeView'], function(_, Marionette, template, TutorsView, AttrsView) {
+define([
+  'underscore',
+  'marionette',
+  'text!./layoutTemplate.html',
+  './tutors/compositeView',
+  './attributes/compositeView',
+  './learners/compositeView'
+], function(_, Marionette, template, TutorsView, AttrsView, LearnersView) {
   var changeText;
   changeText = function(prop) {
     return function(e) {
@@ -18,7 +25,8 @@ define(['underscore', 'marionette', 'text!./layoutTemplate.html', './tutors/comp
     },
     regions: {
       tutors: '#tutors',
-      attrs: '#attributes'
+      attrs: '#attributes',
+      learners: '#learners'
     },
     initialize: function(options) {
       return this.options = options;
@@ -27,6 +35,10 @@ define(['underscore', 'marionette', 'text!./layoutTemplate.html', './tutors/comp
       this.model.get('tutors').fetch({async: false});
       this.tutors.show(new TutorsView({
         collection: this.model.get('tutors')
+      }));
+      this.model.get('learners').fetch({async: false});
+      this.learners.show(new LearnersView({
+        collection: this.model.get('learners')
       }));
       this.model.get('attrs').fetch({async: false});
       this.attrs.show(new AttrsView({

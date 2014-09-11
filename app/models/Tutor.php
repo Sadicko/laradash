@@ -21,6 +21,6 @@ class Tutor extends \Eloquent {
 	 *
 	 * @var array
 	 */
-	protected $hidden = [];
+	protected $hidden = ['password'];
 
 }

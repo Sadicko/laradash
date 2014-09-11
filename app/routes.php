@@ -29,10 +29,12 @@ Route::group(['prefix'=>'api', 'before'=>'api.auth'], function () {
 	Route::model('tutors', 'Tutor');
 	Route::model('attrs', 'Attr');
 	Route::model('parts', 'Part');
+  Route::model('learners', 'Learner');
 	Route::resource('organisations', 'API\OrgsController');
 	Route::resource('organisations.tutors', 'API\TutorsController');
 	Route::resource('organisations.attrs', 'API\AttrsController');
 	Route::resource('organisations.attrs.parts', 'API\PartsController');
+  Route::resource('organisations.learners', 'API\LearnersController');
 });
 
 

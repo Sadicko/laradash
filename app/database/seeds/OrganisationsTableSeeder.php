@@ -13,7 +13,7 @@ class OrganisationsTableSeeder extends Seeder {
 			Organisation::create([
 				'name' => $faker->company,
 				'lrsUser' => $faker->userName,
-				'lrsPass' => '345hb34b5uh34b54u6hu45b6hub35b'
+				'lrsPass' => Hash::make('password')
 			]);
 		}
 	}

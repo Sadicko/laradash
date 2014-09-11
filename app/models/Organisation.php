@@ -15,4 +15,8 @@ class Organisation extends \Eloquent {
 		return $this->hasMany('Attr');
 	}
 
+	public function learners() {
+		return $this->hasMany('Learner');
+	}
+
 }

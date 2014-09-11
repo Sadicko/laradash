@@ -1,4 +1,9 @@
-define(['backbone', './tutors/collection', './attributes/collection'], function(Backbone, TutorsCollection, AttrsCollection) {
+define([
+  'backbone',
+  './tutors/collection',
+  './attributes/collection',
+  './learners/collection'
+], function(Backbone, TutorsCollection, AttrsCollection, LearnersCollection) {
   return Backbone.Model.extend({
     defaults: {
       name: 'New Organisation',
@@ -15,6 +20,9 @@ define(['backbone', './tutors/collection', './attributes/collection'], function(
         attrs: new AttrsCollection([], {
           parent: self
         }),
+        learners: new LearnersCollection([], {
+          parent: self
+        }),
         cid: this.get('id') || this.cid
       });
     },
@@ -25,6 +33,9 @@ define(['backbone', './tutors/collection', './attributes/collection'], function(
         parent: self
       });
       response.attrs = new AttrsCollection(response.attrs, {
+        parent: self
+      });
+      response.learners = new AttrsCollection(response.learners, {
         parent: self
       });
       return response;
