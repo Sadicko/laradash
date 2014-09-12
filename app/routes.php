@@ -1,6 +1,6 @@
 <?php
 
-Route::get('/', ['before'=>'auth', 'uses'=>function () {
+Route::get('/', ['before'=>'site', 'uses'=>function () {
 	return View::make('app');
 }]);
 
@@ -21,7 +21,7 @@ Route::get('logout', array(
 ));
 
 // API.
-Route::group(['prefix'=>'api', 'before'=>'api.auth'], function () {
+Route::group(['prefix'=>'api', 'before'=>'api'], function () {
 	Route::get('test', function () {
 		return Response::json('API test', 200);
 	});

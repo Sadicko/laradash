@@ -31,43 +31,8 @@ App::after(function ($request, $response) {
 |
 */
 
-Route::filter('auth', function () {
-	if (Auth::guest()) {
-		if (Request::ajax() || Request::segment(1) == "api") {
-			return Response::json(null, 401);
-		} else {
-			return Redirect::guest('login');
-		}
-	}
-});
-
-
-Route::filter('api.auth', function () {
-	// Gets credentials.
-	$email = Request::getUser();
-	$password = Request::getPassword();
-
-	// Checks basic auth using credentials.
-	if(isset($email) && isset($password)) {
-		$tutor = Tutor::where('email', $email)->first();
-
-		if (!$tutor || !Hash::check($password, $tutor->password)) {
-			return Response::json(null, 401);
-		}
-	}
-
-	// Checks session auth.
-	else {
-	  	if (Auth::guest()) {
-			if (Request::ajax()) {
-				return Response::json(null, 401);
-			} else {
-				return Redirect::guest('login');
-			}
-		}
-	}
-
-});
+Route::filter('site', 'AuthFilter@site');
+Route::filter('api', 'AuthFilter@api');
 
 /*
 |--------------------------------------------------------------------------

@@ -9,7 +9,7 @@ class BaseController extends \Controller {
 	 * This is used to authenticate the request for particular methods.
 	 */
 	public function __construct() {
-		$this->beforeFilter('auth', ['except'=>['index', 'show']]);
+		$this->beforeFilter('site', ['except'=>['index', 'show']]);
 	}
 
 	/**
