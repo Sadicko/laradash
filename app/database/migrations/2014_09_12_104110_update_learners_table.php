@@ -12,8 +12,7 @@ class UpdateLearnersTable extends Migration {
 	 */
 	public function up() {
 		Schema::table('learners', function(Blueprint $table) {
-			$table->renameColumn('email', 'identifier');
-			DB::statement('ALTER TABLE `learners` ALTER COLUMN `identifier` varchar(2047)')
+			DB::statement('ALTER TABLE `learners` CHANGE COLUMN `email` `identifier` varchar(2047) NOT NULL;');
 		});
 	}
 
@@ -25,8 +24,7 @@ class UpdateLearnersTable extends Migration {
 	 */
 	public function down() {
 		Schema::table('learners', function(Blueprint $table) {
-			$table->renameColumn('identifier', 'email');
-			DB::statement('ALTER TABLE `learners` ALTER COLUMN `email` varchar(255)')
+			DB::statement('ALTER TABLE `learners` CHANGE COLUMN `identifier` `email` varchar(2047) NOT NULL;');
 		});
 	}
 

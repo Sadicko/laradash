@@ -9,7 +9,8 @@
 	},
 	"require-dev": {
 	    "way/generators": "~2.0",
-	    "fzaninotto/faker": "v1.3.0"
+	    "fzaninotto/faker": "v1.3.0",
+	    "doctrine/dbal": "2.*"
 	},
 	"autoload": {
 		"classmap": [
