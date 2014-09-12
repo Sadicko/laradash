@@ -16,7 +16,7 @@ class LearnersController extends BaseController {
 	 * @return AssocArray The accepted fields.
 	 */
 	private function input() {
-		return Input::only('name', 'email');
+		return Input::only('name', 'identifier');
 	}
 
 	/**

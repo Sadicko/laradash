@@ -13,7 +13,7 @@ class LearnersTableSeeder extends Seeder {
 			foreach(range(1, $faker->numberBetween(1, 10)) as $index) {
 				$learner = new Learner([
 					'name' 		=> $faker->name,
-					'email' 	=> $faker->email
+					'identifier' 	=> $faker->email
 				]);
 
 				$learner = $org->learners()->save($learner);

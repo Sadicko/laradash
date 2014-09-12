@@ -13,7 +13,7 @@ define(['underscore', 'marionette', 'text!./layoutTemplate.html'], function(_, M
     events: {
       'click #save': 'save',
       'change #name': 'changeName',
-      'change #email': 'changeEmail',
+      'change #identifier': 'changeIdentifier',
     },
     initialize: function(options) {
       return this.options = options;
@@ -23,6 +23,6 @@ define(['underscore', 'marionette', 'text!./layoutTemplate.html'], function(_, M
       return alert('Learner has been saved.');
     },
     changeName: changeText('name'),
-    changeEmail: changeText('email')
+    changeIdentifier: changeText('identifier')
   });
 });

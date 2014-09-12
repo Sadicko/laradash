@@ -4,12 +4,12 @@ class Learner extends \Eloquent {
 
 	// Add your validation rules here
 	public static $rules = [
-		'email' 	=> 'required|email',
+		'identifier' 	=> 'required',
 		'name' 		=> 'required'
 	];
 
 	// Don't forget to fill this array
-	protected $fillable = ['email', 'name'];
+	protected $fillable = ['identifier', 'name'];
 
 	public function organisation() {
 		return $this->belongsTo('Organisation');
