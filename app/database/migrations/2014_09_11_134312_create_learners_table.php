@@ -13,7 +13,7 @@ class CreateLearnersTable extends Migration {
 	public function up() {
 		Schema::create('learners', function($table) {
 	        $table->increments('id');
-	        $table->string('identifier');
+	        $table->string('email');
 	        $table->string('name');
 	        $table->timestamps();
 
