@@ -1,10 +1,7 @@
-define(['backbone'], function(Backbone) {
-  return Backbone.Model.extend({
+define(['relatedModel'], function(RelatedModel) {
+  return RelatedModel.extend({
     defaults: {
       name: 'New Part'
-    },
-    initialize: function () {
-    	this.set({cid: this.get('id') || this.cid});
     }
   });
 });

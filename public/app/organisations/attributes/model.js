@@ -1,25 +1,10 @@
-define(['backbone', './parts/collection'], function(Backbone, PartsCollection) {
-  return Backbone.Model.extend({
+define(['relatedModel', './parts/collection'], function(RelatedModel, PartsCollection) {
+  return RelatedModel.extend({
     defaults: {
       name: 'New Attribute'
     },
-
-    initialize: function (data, opts) {
-      var self = this;
-      this.set({
-        parts: new PartsCollection([], {
-          parent: self
-        }),
-        cid: this.get('id') || this.cid
-      });
-    },
-
-    parse: function (response) {
-      var self = this;
-      response.parts = new PartsCollection(response.parts, {
-        parent: self
-      });
-      return response;
+    relations: {
+    	parts: PartsCollection
     }
   });
 });

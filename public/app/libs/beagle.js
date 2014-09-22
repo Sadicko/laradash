@@ -1,3 +1,5 @@
+// TODO: Wildcards.
+
 define([], function() {
   var modifyParams, route, routes, walk;
   walk = function(callbacks, params) {

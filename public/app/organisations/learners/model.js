@@ -1,11 +1,8 @@
-define(['backbone'], function(Backbone) {
-  return Backbone.Model.extend({
+define(['relatedModel'], function(RelatedModel) {
+  return RelatedModel.extend({
     defaults: {
       name: 'New Learner',
       identifier: 'ex@mple.com'
-    },
-    initialize: function () {
-    	this.set({cid: this.get('id') || this.cid});
     }
   });
 });

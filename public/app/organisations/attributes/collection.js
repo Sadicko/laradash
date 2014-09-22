@@ -1,10 +1,6 @@
-define(['backbone', './model'], function(Backbone, Model) {
-  return Backbone.Collection.extend({
+define(['nestedCollection', './model'], function(NestedCollection, Model) {
+  return NestedCollection.extend({
     model: Model,
-    initialize: function (data, opts) {
-    	this.url = function () {
-    		return opts.parent.url() + '/attrs';
-    	};
-    }
+    nestedUrl: 'attrs'
   });
 });
