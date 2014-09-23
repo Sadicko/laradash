@@ -21,6 +21,9 @@ requirejs.config({
     text: '//cdnjs.cloudflare.com/ajax/libs/require-text/2.0.12/text.min',
     beagle: './libs/beagle',
     nestedCollection: './libs/nestedCollection',
+    nestedLayout: './libs/nestedLayout',
+    nestedItemView: './libs/nestedItemView',
+    nestedComposite: './libs/nestedComposite',
     relatedModel: './libs/relatedModel'
   }
 });
