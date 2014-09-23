@@ -3,7 +3,7 @@ define(['marionette'], function(Marionette) {
     childViewContainer: '#models',
     events: {},
     initialize: function (options) {
-      this.events['click #add'] = self.add;
+      this.events['click #add'] = this.add;
       this.options = options;
     },
     add: function () {
