@@ -3,7 +3,7 @@ define(['marionette'], function(Marionette) {
     events: {},
     tagName: 'tr',
     initialize: function (options) {
-      this.events['click #trash'] = self.trash;
+      this.events['click #trash'] = this.trash;
       this.options = options;
     },
     trash: function() {
