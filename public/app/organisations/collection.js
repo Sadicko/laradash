@@ -1,4 +1,7 @@
-define(['backbone', './model'], function(Backbone, Model) {
+define([
+  'backbone',
+  './model'
+], function(Backbone, Model) {
   return Backbone.Collection.extend({
     model: Model,
     url: 'api/organisations'

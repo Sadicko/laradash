@@ -1,14 +1,11 @@
-define(['underscore', 'marionette', './itemView', 'text!./compositeTemplate.html'], function(_, Marionette, ItemView, template) {
-  return Marionette.CompositeView.extend({
+define([
+  'underscore',
+  'nestedComposite',
+  './itemView',
+  'text!./compositeTemplate.html'
+], function(_, NestedComposite, ItemView, template) {
+  return NestedComposite.extend({
     childView: ItemView,
-    template: _.template(template),
-    childViewContainer: '#models',
-    events: {
-    	'click #add': 'add'
-    },
-
-    add: function () {
-    	this.collection.create({}, {wait: true});
-    }
+    template: _.template(template)
   });
 });
