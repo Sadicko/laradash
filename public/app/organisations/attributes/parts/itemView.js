@@ -7,8 +7,5 @@ define([
   return NestedItemView.extend({
     model: Model,
     template: _.template(template),
-    events: {
-      'change #partName': 'changeValue'
-    }
   });
 });

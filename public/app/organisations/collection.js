@@ -1,9 +1,9 @@
 define([
-  'backbone',
+  'nestedCollection',
   './model'
-], function(Backbone, Model) {
-  return Backbone.Collection.extend({
+], function(NestedCollection, Model) {
+  return NestedCollection.extend({
     model: Model,
-    url: 'api/organisations'
+    nestedUrl: 'organisations'
   });
 });

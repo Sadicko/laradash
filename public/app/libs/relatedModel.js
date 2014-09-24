@@ -14,17 +14,19 @@ define(['backbone'], function(Backbone) {
 
   return Backbone.Model.extend({
     initialize: function (data, opts) {
-      var self = this;
       var changes = {};
-
-      assignRelations(self, changes, true);
-      changes['cid'] = this.get('id') || this.cid;
-      self.set(changes);
+ 
+      if (opts.url) {
+        this.url = function () {
+          return opts.url;
+        };
+      }
+      
+      assignRelations(this, changes, true);
     },
 
     parse: function (response) {
-      var self = this;
-      assignRelations(self, response, false);
+      assignRelations(this, response, false);
       return response;
     }
   });

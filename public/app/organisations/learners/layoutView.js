@@ -4,10 +4,6 @@ define([
   'text!./layoutTemplate.html'
 ], function(_, NestedLayout, template) {
   return NestedLayout.extend({
-    template: _.template(template),
-    events: {
-      'change #name': 'changeValue',
-      'change #identifier': 'changeValue',
-    }
+    template: _.template(template)
   });
 });

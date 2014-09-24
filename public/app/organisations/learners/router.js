@@ -1,13 +1,22 @@
-define(['beagle', './collection', './compositeView', './layoutView', './model'], function(beagle, Collection, CompositeView, LayoutView, Model) {
+define([
+  'beagle',
+  './collection',
+  './layoutView',
+  './model'
+], function (beagle, Collection, LayoutView, Model) {
+  var collection = new Collection();
+
   return beagle.routes({
-    '/edit/:learnerid': function(params, path) {
-      return params.app.content.show(new LayoutView({
-        model: params.learner
+    'edit/:id': function(params, path) {
+      params.app.content.show(new LayoutView({
+        model: new Model({}, {
+          url: params.url
+        })
       }));
     }
   }, {
-    'learnerid': function(id, params) {
-      params.learner = params.collection.get(id);
+    'id': function(id, params) {
+      params.url += '/' + collection.nestedUrl + '/' + id;
       return id;
     }
   });

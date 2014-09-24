@@ -8,49 +8,35 @@ define([
   './tutors/router',
   './learners/router'
 ], function(beagle, Collection, CompositeView, LayoutView, Model, AttrsRouter, TutorsRouter, LearnersRouter) {
-  var organisations = new Collection();
-  var orgsFetch = organisations.fetch().error(function () {
-    alert('Failed to load organisations');
-  }).success;
+  var collection = new Collection();
 
   return beagle.routes({
-    '': function(params, path) {
-      orgsFetch(function () {
+    // List.
+    '*': function(params, path) {
+      if (path.indexOf('edit') === -1) {
+        collection.url = params.url + '/' + collection.nestedUrl;
         params.app.content.show(new CompositeView({
-          collection: organisations
-        }))
-      });
-    },
-    'edit/:orgid': function(params, path) {
-      orgsFetch(function () {
-        params.app.content.show(new LayoutView({
-          model: params.org
+          collection: collection
         }));
-      });
+      }
     },
-    'edit/:orgid/attributes': function(params, path) {
-      orgsFetch(function () {
-        params.collection = params.org.get('attrs');
-        AttrsRouter(params, path);
-      });
+
+    // Item.
+    'edit/:id': function(params, path) {
+      params.app.content.show(new LayoutView({
+        model: new Model({}, {
+          url: params.url
+        })
+      }));
     },
-    'edit/:orgid/tutors': function(params, path) {
-      orgsFetch(function () {
-        params.collection = params.org.get('tutors');
-        TutorsRouter(params, path);
-      });
-    },
-    'edit/:orgid/learners': function(params, path) {
-      orgsFetch(function () {
-        params.collection = params.org.get('learners');
-        LearnersRouter(params, path);
-      });
-    }
+
+    // Relations.
+    'edit/:id/attributes/*': AttrsRouter,
+    'edit/:id/tutors/*': TutorsRouter,
+    'edit/:id/learners/*': LearnersRouter
   }, {
-    'orgid': function(id, params) {
-      orgsFetch(function () {
-        params.org = organisations.get(id);
-      });
+    'id': function(id, params) {
+      params.url += '/' + collection.nestedUrl + '/' + id;
       return id;
     }
   });

@@ -4,6 +4,7 @@ define(['marionette'], function(Marionette) {
     tagName: 'tr',
     initialize: function (options) {
       this.events['click #trash'] = this.trash;
+      this.events['change input'] = this.changeValue;
       this.options = options;
     },
     trash: function() {
@@ -13,8 +14,10 @@ define(['marionette'], function(Marionette) {
     },
     changeValue: function(e) {
       var changes = {};
-      changes[e.currentTarget.id] = e.currentTarget.value;
-      return this.model.set(changes);
+      var prop = e.currentTarget.id.split('-').pop();
+
+      changes[prop] = e.currentTarget.value;
+      this.model.save(changes);
     }
   });
 });
