@@ -3,10 +3,17 @@ define(['marionette'], function(Marionette) {
     childViewContainer: '#models',
     events: {},
     initialize: function (options) {
+      // Adds helper events.
       this.events['click #add'] = this.add;
+
+      // Adds options.
       this.options = options;
+
+      // Loads data.
       this.collection.fetch();
     },
+
+    // Defines callbacks for helper events.
     add: function () {
       this.collection.create({}, {wait: true});
     }

@@ -1,3 +1,4 @@
+// github.com/ht2/beagle
 (function() {
   var beagle;
 

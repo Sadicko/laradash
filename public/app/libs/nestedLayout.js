@@ -1,6 +1,7 @@
 define([
   'marionette',
 ], function(Marionette) {
+  // Runs fn for each relation in self.
   var eachRelation = function (self, fn) {
     if (self.relations) {
       Object.keys(self.relations).forEach(fn);
@@ -12,20 +13,25 @@ define([
     modelSuccess: function (fn) {},
     events: {},
     initialize: function (options) {
-      // Setup regions for collections.
+      // Sets up regions for relations.
       var self = this;
       eachRelation(this, function (relation) {
         self.addRegion(relation, '#' + relation);
       });
       
+      // Adds helper events.
       this.events['click #save'] = this.save;
       this.events['change input'] = this.changeValue;
+
+      // Adds options.
       this.options = options;
+
+      // Loads data.
       this.modelSuccess = this.model.fetch().success;
       this.modelSuccess(this.render)
     },
     onShow: function () {
-      // Load and show collections.
+      // Loads and shows relations.
       var self = this;
       this.modelSuccess(function () {
         eachRelation(self, function (relation) {
@@ -35,6 +41,8 @@ define([
         });
       });
     },
+
+    // Defines callbacks for helper events.
     save: function () {
       this.model.save().success(function (model, response, options) {
         alert('Saved successfully.');
@@ -49,6 +57,9 @@ define([
       var collection = this.model.collection;
       var url = collection ? collection.nestedUrl : '';
 
+      // Checks that prop belongs to model.
+      // Allows for collectionname-prop.
+      // Avoids changing properties that have the same name as nested model properties.
       if (prop.indexOf('-') === -1 || prop.split('-')[0] === url) {
         changes[prop] = e.currentTarget.value;
         this.model.set(changes);

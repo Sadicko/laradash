@@ -1,10 +1,11 @@
 define(['backbone'], function(Backbone) {
   var assignRelations = function (self, response, empty) {
+    // Constructs models for relations.
     if (typeof self.relations === 'object') {
       Object.keys(self.relations).forEach(function (relation) {
         var value = empty ? null : response[relation];
         response[relation] = new self.relations[relation](value, {
-          parent: self
+          parent: self // Allows for nested urls.
         });
       });
     }
@@ -16,6 +17,7 @@ define(['backbone'], function(Backbone) {
     initialize: function (data, opts) {
       var changes = {};
  
+      // Overrides `url` if given in `opts`.
       if (opts.url) {
         this.url = function () {
           return opts.url;
