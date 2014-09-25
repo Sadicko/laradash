@@ -1,56 +1,53 @@
 define([
   'marionette',
-], function(Marionette) {
-  // Runs fn for each relation in self.
-  var eachRelation = function (self, fn) {
-    if (self.relations) {
-      Object.keys(self.relations).forEach(fn);
-    }
-    return self.relations;
-  };
-
+  './nestedItemView'
+], function(Marionette, NestedItemView) {
   return Marionette.LayoutView.extend({
-    modelSuccess: function (fn) {},
-    events: {},
-    initialize: function (options) {
-      // Sets up regions for relations.
+    // Adds utility methods (these should not override Marionette methods).
+    _eachRelation: function (fn) {
+      if (this.relations) {
+        Object.keys(this.relations).forEach(fn);
+      }
+      return this.relations;
+    },
+    _initializeRelations: function () {
       var self = this;
-      eachRelation(this, function (relation) {
+      self._eachRelation(function (relation) {
         self.addRegion(relation, '#' + relation);
       });
-      
-      // Adds helper events.
-      this.events['click #save'] = this.save;
-      this.events['change input'] = this.changeValue;
-
-      // Adds options.
-      this.options = options;
-
-      // Loads data.
-      this.modelSuccess = this.model.fetch().success;
-      this.modelSuccess(this.render)
     },
-    onShow: function () {
-      // Loads and shows relations.
+    _showRelations: function () {
       var self = this;
-      this.modelSuccess(function () {
-        eachRelation(self, function (relation) {
+      self._modelSuccess(function () {
+        self._eachRelation(function (relation) {
           self[relation].show(new self.relations[relation]({
             collection: self.model.get(relation)
           }));
         });
       });
     },
+    _initializeModel: function () {
+      this._modelSuccess = this.model.fetch().success;
+      this._modelSuccess(this.render);
+    },
+    _initHelperEvents: NestedItemView.prototype._initHelperEvents,
+    _initializeTemplate: NestedItemView.prototype._initializeTemplate,
+    _modelSuccess: function (fn) {},
+
+    // Extends Marionette.
+    events: {},
+    initialize: function (options) {
+      this._initializeRelations();
+      NestedItemView.prototype.initialize.apply(this, options);
+      this._initializeModel();
+    },
+    onShow: function () {
+      this._showRelations();
+    },
 
     // Defines callbacks for helper events.
-    save: function () {
-      this.model.save().success(function (model, response, options) {
-        alert('Saved successfully.');
-      }).error(function (model, response, options) {
-        alert('Could not save.');
-        console.error(model, response, options);
-      });
-    },
+    trash: NestedItemView.prototype.trash,
+    save: NestedItemView.prototype.save,
     changeValue: function(e) {
       var changes = {};
       var prop = e.currentTarget.id;

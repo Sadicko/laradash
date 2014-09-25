@@ -1,34 +1,36 @@
 define(['backbone'], function(Backbone) {
-  var assignRelations = function (self, response, empty) {
-    // Constructs models for relations.
-    if (typeof self.relations === 'object') {
-      Object.keys(self.relations).forEach(function (relation) {
-        var value = empty ? null : response[relation];
-        response[relation] = new self.relations[relation](value, {
-          parent: self // Allows for nested urls.
-        });
-      });
-    }
-
-    return response;
-  };
-
   return Backbone.Model.extend({
-    initialize: function (data, opts) {
-      var changes = {};
- 
-      // Overrides `url` if given in `opts`.
-      if (opts.url) {
+    // Adds utility methods (these should not override Marionette methods).
+    _initializeRelations: function (response, empty) {
+      var self = this;
+      if (typeof self.relations === 'object') {
+        Object.keys(self.relations).forEach(function (relation) {
+          var value = empty ? null : response[relation];
+          response[relation] = new self.relations[relation](value, {
+            parent: self // Allows for nested urls.
+          });
+        });
+      }
+
+      return response;
+    },
+    _initializeUrl: function () {
+      if (this.options.url) {
         this.url = function () {
-          return opts.url;
+          return this.options.url;
         };
       }
-      
-      assignRelations(this, changes, true);
     },
 
+    // Extends Marionette.
+    initialize: function (data, opts) {
+      var changes = {};
+      this.options = opts;
+      this._initializeUrl();
+      this._initializeRelations(changes, true);
+    },
     parse: function (response) {
-      assignRelations(this, response, false);
+      this._initializeRelations(response, false);
       return response;
     }
   });

@@ -1,15 +1,21 @@
-define(['marionette'], function(Marionette) {
+define([
+  'marionette',
+  './nestedItemView'
+], function(Marionette, NestedItemView) {
   return Marionette.CompositeView.extend({
+    // Adds utility methods (these should not override Marionette methods).
+    _initHelperEvents: function () {
+      this.events['click #add'] = this.add;
+    },
+    _initializeTemplate: NestedItemView.prototype._initializeTemplate,
+
+    // Extends Marionette.
     childViewContainer: '#models',
     events: {},
     initialize: function (options) {
-      // Adds helper events.
-      this.events['click #add'] = this.add;
-
-      // Adds options.
       this.options = options;
-
-      // Loads data.
+      this._initializeTemplate();
+      this._initHelperEvents();
       this.collection.fetch();
     },
 
