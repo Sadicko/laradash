@@ -1,16 +1,20 @@
 <?php namespace API;
 
-use \View;
+use \View, Illuminate\Routing\Route;
 
-class BaseController extends \Controller {
+abstract class BaseController extends \Controller {
 
 	/**
 	 * Constructs a controller.
 	 * This is used to authenticate the request for particular methods.
 	 */
 	public function __construct() {
-		$this->beforeFilter('site', ['except'=>['index', 'show']]);
+		$this->beforeFilter('tutorOrg', ['except' => ['auth']]);
+		$this->beforeFilter('@validateShowPath', ['only' => ['show', 'update', 'destroy']]);
+		$this->beforeFilter('userAPI', ['only'=>['store', 'update', 'destroy']]);
 	}
+
+	public function validateShowPath(Route $route) {}
 
 	/**
 	 * Setup the layout used by the controller.

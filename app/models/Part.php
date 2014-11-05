@@ -3,8 +3,11 @@
 class Part extends \Eloquent {
 	protected $fillable = ['name'];
 
-	public static $rules = [
-		'name' => 'required'
+	public static $storeRules = [
+		'name' => 'required|min:1'
+	];
+	public static $updateRules = [
+		'name' => 'min:1'
 	];
 
 	public function attr() {

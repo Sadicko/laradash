@@ -1,33 +1,30 @@
 <?php namespace API;
 
 use \Organisation, \Tutor;
-use \Input, \Validator, \Response;
+use \Input, \Validator, \Response, Illuminate\Routing\Route;
 
 class TutorsController extends BaseController {
-
-	/**
-	 * Constructs a controller.
-	 * This is used to authenticate the request for particular methods.
-	 */
-	public function __construct() {
-		$this->beforeFilter('auth', ['except'=>['index', 'show', 'auth']]);
-	}
 
 	/**
 	 * Gets accepted fields from the input.
 	 * @return AssocArray The accepted fields.
 	 */
 	private function input() {
-		return Input::only('name', 'email', 'password');
+		return Input::all();
 	}
 
 	/**
-	 * Validates the given data.
-	 * @param  AssocArray $data The data to be validated.
-	 * @return Validator The validator used to validate the data.
+	 * Validates show path.
+	 * @param Route $route
+	 * @return Response
 	 */
-	private function validate($data) {
-		return Validator::make($data, Tutor::$rules);
+	public function validateShowPath(Route $route) {
+		$org = $route->getParameter('organisations');
+		$tutor = $route->getParameter('tutors');
+
+		if ($tutor->organisation_id !== $org->id) {
+			return Response::json(null, 404);
+		}
 	}
 
 	/**
@@ -37,7 +34,7 @@ class TutorsController extends BaseController {
 	 */
 	public function store(Organisation $org) {
 		$data = $this->input();
-		$validator = $this->validate($data);
+		$validator = Validator::make($data, Tutor::$storeRules);
 
 		if ($validator->fails()) {
 			return Response::json(['success'=>false, 'errors'=>$validator->errors() ], 400);
@@ -57,7 +54,7 @@ class TutorsController extends BaseController {
 	 */
 	public function update(Organisation $org, Tutor $tutor) {
 		$data = $this->input();
-		$validator = $this->validate($data);
+		$validator = Validator::make($data, Tutor::$updateRules);
 
 		if ($validator->fails()) {
 			return Response::json(['success'=>false, 'errors'=>$validator->errors() ], 400);
@@ -107,8 +104,13 @@ class TutorsController extends BaseController {
 	 * @return Tutor The tutor currently authenticated via Basic Auth.
 	 */
 	public function auth() {
-		$email = \Request::getUser();
-		$tutor = Tutor::where('email', $email)->first();
+		if (Input::get('userAuth', false)) {
+			$tutor = null;
+		} else {
+			$email = \Request::getUser();
+			$tutor = Tutor::where('email', $email)->first();
+		}
+		
 		return Response::json($tutor);
 	}
 }

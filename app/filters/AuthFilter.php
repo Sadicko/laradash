@@ -8,7 +8,7 @@ class AuthFilter {
 
 		if(isset($email) && isset($password) && !$userAuth) {
 			$tutor = Tutor::where('email', $email)->first();
-			return $tutor && Hash::check($password, $tutor->password);
+			return $tutor && Hash::check($password, $tutor->password) ? $tutor : null;
 		} else {
 			return false;
 		}
@@ -21,7 +21,7 @@ class AuthFilter {
 
 		if(isset($email) && isset($password) && $userAuth) {
 			$user = User::where('email', $email)->first();
-			return $user && Hash::check($password, $user->password);
+			return $user && Hash::check($password, $user->password) ? $user : null;
 		} else {
 			return false;
 		}
@@ -37,24 +37,28 @@ class AuthFilter {
 		return isset($email) && isset($password);
 	}
 
+	public function tutorOrg($route) {
+		$org = $route->getParameter('organisations');
+		$tutor = $this->tutor();
+		if (!Input::get('userAuth', false) && ($tutor && $tutor->organisation_id !== $org->id)) {
+			return Response::json(null, 403);
+		}
+	}
+
+	public function userAPI() {
+		if (!(($this->basic() && $this->user()) || $this->session())) {
+			return Response::json(null, 401);
+		}
+	}
+
 	public function api() {
-		if ($this->basic()) {
-			if ($this->tutor() || $this->user()) {
-				// Authenticated.
-			} else {
-				return Response::json(null, 401);
-			}
-		} else if ($this->session()) {
-			// Authenticated.
-		} else {
+		if (!(($this->basic() && ($this->tutor() || $this->user())) || $this->session())) {
 			return Response::json(null, 401);
 		}
 	}
 
 	public function site() {
-		if ($this->session()) {
-			// Authenticated.
-		} else {
+		if (!$this->session()) {
 			return Redirect::guest('login');
 		}
 	}

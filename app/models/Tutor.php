@@ -3,9 +3,14 @@
 class Tutor extends \Eloquent {
 
 	// Add your validation rules here
-	public static $rules = [
-		'email' 	=> 'required|email',
-		'name' 		=> 'required',
+	public static $storeRules = [
+		'email' 	=> 'required|email|unique:tutors',
+		'name' 		=> 'required|min:1',
+		'password'	=> 'required|min:6'
+	];
+	public static $updateRules = [
+		'email' 	=> 'email|unique:tutors',
+		'name' 		=> 'min:1',
 		'password'	=> 'min:6'
 	];
 

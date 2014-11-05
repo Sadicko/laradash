@@ -1,7 +1,7 @@
 <?php namespace API;
 
 use \Organisation, \Learner;
-use \Input, \Validator, \Response;
+use \Input, \Validator, \Response, Illuminate\Routing\Route;
 
 class LearnersController extends BaseController {
 
@@ -9,23 +9,32 @@ class LearnersController extends BaseController {
 	 * Constructs a controller.
 	 * This is used to authenticate the request for particular methods.
 	 */
-	public function __construct() {}
+	public function __construct() {
+		$this->beforeFilter('tutorOrg');
+		$this->beforeFilter('@validateShowPath', ['only' => ['show', 'update', 'destroy']]);
+		$this->beforeFilter('api', ['only'=>['store', 'update', 'destroy']]);
+	}
 
 	/**
 	 * Gets accepted fields from the input.
 	 * @return AssocArray The accepted fields.
 	 */
 	private function input() {
-		return Input::only('name', 'identifier');
+		return Input::all();
 	}
 
 	/**
-	 * Validates the given data.
-	 * @param  AssocArray $data The data to be validated.
-	 * @return Validator The validator used to validate the data.
+	 * Validates show path.
+	 * @param Route $route
+	 * @return Response
 	 */
-	private function validate($data) {
-		return Validator::make($data, Learner::$rules);
+	public function validateShowPath(Route $route) {
+		$org = $route->getParameter('organisations');
+		$learner = $route->getParameter('learners');
+
+		if ($learner->organisation_id !== $org->id) {
+			return Response::json(null, 404);
+		}
 	}
 
 	/**
@@ -35,7 +44,7 @@ class LearnersController extends BaseController {
 	 */
 	public function store(Organisation $org) {
 		$data = $this->input();
-		$validator = $this->validate($data);
+		$validator = Validator::make($data, Learner::$storeRules);
 
 		if ($validator->fails()) {
 			return Response::json(['success'=>false, 'errors'=>$validator->errors() ], 400);
@@ -55,7 +64,7 @@ class LearnersController extends BaseController {
 	 */
 	public function update(Organisation $org, Learner $learner) {
 		$data = $this->input();
-		$validator = $this->validate($data);
+		$validator = Validator::make($data, Learner::$updateRules);
 
 		if ($validator->fails()) {
 			return Response::json(['success'=>false, 'errors'=>$validator->errors() ], 400);
