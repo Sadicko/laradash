@@ -3,12 +3,15 @@
 class Learner extends \Eloquent {
 
 	// Add your validation rules here
-	public static $rules = [
-		'identifier' 	=> 'required',
-		'name' 		=> 'required'
+	public static $storeRules = [
+		'identifier' 	=> 'required|min:1',
+		'name' 		=> 'required|min:1'
+	];
+	public static $updateRules = [
+		'identifier' 	=> 'min:1',
+		'name' 		=> 'min:1'
 	];
 
-	// Don't forget to fill this array
 	protected $fillable = ['identifier', 'name'];
 
 	public function organisation() {

@@ -6,20 +6,20 @@ use \Input, \Validator, \Response;
 class OrgsController extends BaseController {
 
 	/**
+	 * Constructs a controller.
+	 * This is used to authenticate the request for particular methods.
+	 */
+	public function __construct() {
+		$this->beforeFilter('tutorOrg', ['only' => ['show']]);
+		$this->beforeFilter('userAPI', ['only'=>['index', 'store', 'update', 'destroy']]);
+	}
+
+	/**
 	 * Gets accepted fields from the input.
 	 * @return AssocArray The accepted fields.
 	 */
 	private function input() {
-		return Input::only('name', 'lrsUser', 'lrsPass');
-	}
-
-	/**
-	 * Validates the given data.
-	 * @param  AssocArray $data The data to be validated.
-	 * @return Validator The validator used to validate the data.
-	 */
-	private function validate($data) {
-		return Validator::make($data, Organisation::$rules);
+		return Input::all();
 	}
 
 	/**
@@ -28,7 +28,7 @@ class OrgsController extends BaseController {
 	 */
 	public function store() {
 		$data = $this->input();
-		$validator = $this->validate($data);
+		$validator = Validator::make($data, Organisation::$storeRules);
 
 		if ($validator->fails()) {
 			return Response::json(['success'=>false, 'errors'=>$validator->errors() ], 400);
@@ -45,7 +45,7 @@ class OrgsController extends BaseController {
 	 */
 	public function update(Organisation $org) {
 		$data = $this->input();
-		$validator = $this->validate($data);
+		$validator = Validator::make($data, Organisation::$updateRules);
 
 		if ($validator->fails()) {
 			return Response::json(['success'=>false, 'errors'=>$validator->errors() ], 400);

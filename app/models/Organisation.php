@@ -3,7 +3,10 @@
 class Organisation extends \Eloquent {
 	protected $fillable = ['name', 'lrsUser', 'lrsPass'];
 
-	public static $rules = [
+	public static $storeRules = [
+		'name'=>'required|min:4'
+	];
+	public static $updateRules = [
 		'name'=>'required|min:4'
 	];
 

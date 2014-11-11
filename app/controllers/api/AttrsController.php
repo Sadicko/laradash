@@ -1,7 +1,7 @@
 <?php namespace API;
 
 use \Organisation, \Attr;
-use \Input, \Validator, \Response;
+use \Input, \Validator, \Response, Illuminate\Routing\Route;
 
 class AttrsController extends BaseController {
 
@@ -10,16 +10,21 @@ class AttrsController extends BaseController {
 	 * @return AssocArray The accepted fields.
 	 */
 	private function input() {
-		return Input::only('name');
+		return Input::all();
 	}
 
 	/**
-	 * Validates the given data.
-	 * @param  AssocArray $data The data to be validated.
-	 * @return Validator The validator used to validate the data.
+	 * Validates show path.
+	 * @param Route $route
+	 * @return Response
 	 */
-	private function validate($data) {
-		return Validator::make($data, Attr::$rules);
+	public function validateShowPath(Route $route) {
+		$org = $route->getParameter('organisations');
+		$attr = $route->getParameter('attrs');
+
+		if ($attr->organisation_id !== $org->id) {
+			return Response::json(null, 404);
+		}
 	}
 
 	/**
@@ -29,10 +34,10 @@ class AttrsController extends BaseController {
 	 */
 	public function store(Organisation $org) {
 		$data = $this->input();
-		$validator = $this->validate($data);
+		$validator = Validator::make($data, Attr::$storeRules);
 
 		if ($validator->fails()) {
-			return Response::json(['success'=>false, 'errors'=>$validator->errors() ], 400);
+			return Response::json(['success'=>false, 'errors'=>$validator->errors()], 400);
 		} else {
 			$attr = new Attr($data);
 			$attr->organisation()->associate($org);
@@ -49,7 +54,7 @@ class AttrsController extends BaseController {
 	 */
 	public function update(Organisation $org, Attr $attr) {
 		$data = $this->input();
-		$validator = $this->validate($data);
+		$validator = Validator::make($data, Attr::$updateRules);
 
 		if ($validator->fails()) {
 			return Response::json(['success'=>false, 'errors'=>$validator->errors() ], 400);
