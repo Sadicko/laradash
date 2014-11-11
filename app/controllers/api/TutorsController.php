@@ -10,7 +10,7 @@ class TutorsController extends BaseController {
 	 * This is used to authenticate the request for particular methods.
 	 */
 	public function __construct() {
-		$this->beforeFilter('auth', ['except'=>['index', 'show', 'auth']]);
+		$this->beforeFilter('userAPI', ['except'=>['index', 'show', 'auth']]);
 		$this->beforeFilter('tutorAPI', ['only'=>['auth']]);
 	}
 
