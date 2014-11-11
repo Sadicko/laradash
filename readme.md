@@ -1,4 +1,4 @@
-Laradash
+# Laradash
 > An administrator dashboard for the Learning Locker feedback app.
 
 *Laradash is copyright [HT2](http://ht2.co.uk)*
