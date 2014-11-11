@@ -19,7 +19,7 @@ requirejs.config({
     backbone: '//cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.2/backbone-min',
     marionette: '//cdnjs.cloudflare.com/ajax/libs/backbone.marionette/2.0.2/backbone.marionette.min',
     text: '//cdnjs.cloudflare.com/ajax/libs/require-text/2.0.12/text.min',
-    beagle: './libs/beagle',
+    beagle: '//cdn.rawgit.com/ht2/beagle/1.0.3/build/export',
     nestedCollection: './libs/nestedCollection',
     nestedLayout: './libs/nestedLayout',
     nestedItemView: './libs/nestedItemView',
