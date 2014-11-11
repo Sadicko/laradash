@@ -52,7 +52,7 @@ class AuthFilter {
 	}
 
 	public function userAPI() {
-		if (!$this->user() || $this->session()) {
+		if (!$this->user() && !$this->session()) {
 			return Response::json(null, 401);
 		}
 	}
