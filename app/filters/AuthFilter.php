@@ -37,24 +37,20 @@ class AuthFilter {
 		return isset($email) && isset($password);
 	}
 
+	public function tutorAPI() {
+		if (!$this->tutor()) {
+			return Response::json(null, 401);
+		}
+	}
+
 	public function api() {
-		if ($this->basic()) {
-			if ($this->tutor() || $this->user()) {
-				// Authenticated.
-			} else {
-				return Response::json(null, 401);
-			}
-		} else if ($this->session()) {
-			// Authenticated.
-		} else {
+		if (!($this->tutor() || $this->user()) && !$this->session()) {
 			return Response::json(null, 401);
 		}
 	}
 
 	public function site() {
-		if ($this->session()) {
-			// Authenticated.
-		} else {
+		if (!$this->session()) {
 			return Redirect::guest('login');
 		}
 	}

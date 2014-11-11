@@ -11,6 +11,7 @@ class TutorsController extends BaseController {
 	 */
 	public function __construct() {
 		$this->beforeFilter('auth', ['except'=>['index', 'show', 'auth']]);
+		$this->beforeFilter('tutorAPI', ['only'=>['auth']]);
 	}
 
 	/**
@@ -109,6 +110,7 @@ class TutorsController extends BaseController {
 	public function auth() {
 		$email = \Request::getUser();
 		$tutor = Tutor::where('email', $email)->first();
+		$tutor->load(['organisation']);
 		return Response::json($tutor);
 	}
 }
