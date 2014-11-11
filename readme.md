@@ -1,25 +1,30 @@
-## Laravel PHP Framework
+# Laradash
+> An administrator dashboard for the Learning Locker feedback app.
 
-[![Build Status](https://travis-ci.org/laravel/framework.svg)](https://travis-ci.org/laravel/framework)
-[![Total Downloads](https://poser.pugx.org/laravel/framework/downloads.svg)](https://packagist.org/packages/laravel/framework)
-[![Latest Stable Version](https://poser.pugx.org/laravel/framework/v/stable.svg)](https://packagist.org/packages/laravel/framework)
-[![Latest Unstable Version](https://poser.pugx.org/laravel/framework/v/unstable.svg)](https://packagist.org/packages/laravel/framework)
-[![License](https://poser.pugx.org/laravel/framework/license.svg)](https://packagist.org/packages/laravel/framework)
+*Laradash is copyright [HT2](http://ht2.co.uk)*
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as authentication, routing, sessions, and caching.
+## Users
+### Requirements
+1. MySQL
+2. Composer
+3. PHP
 
-Laravel aims to make the development process a pleasing one for the developer without sacrificing application functionality. Happy developers make the best code. To this end, we've attempted to combine the very best of what we have seen in other web frameworks, including frameworks implemented in other languages, such as Ruby on Rails, ASP.NET MVC, and Sinatra.
+### Installation
+1. Get the source by either:
+  1. Cloning the repository with `git clone https://github.com/ryansmith94/laradash.git`.
+  2. [Downloading the repository](https://github.com/ryansmith94/laradash/archive/master.zip).
+2. Install the dependencies with `composer install`.
+3. Add your username and password for your database to `app/config/database.php`.
+4. Migrate the database with `php artisan migrate`.
 
-Laravel is accessible, yet powerful, providing powerful tools needed for large, robust applications. A superb inversion of control container, expressive migration system, and tightly integrated unit testing support give you the tools you need to build any application with which you are tasked.
+## Developers
+Tasks for this project are currently recorded via Asana. You may however contribute to this project via [issues](/issues) and [pull request](/pulls), however, please see the [guidelines](/contributing.md) before doing so.
 
-## Official Documentation
+### Getting Started
+1. Install [requirements](#requirements).
+2. [Install and setup](#installation) Laradash.
+3. Change the code.
+4. Commit and push your changes to Github.
+5. Create a [pull request](/pulls) on Github.
 
-Documentation for the entire framework can be found on the [Laravel website](http://laravel.com/docs).
-
-### Contributing To Laravel
-
-**All issues and pull requests should be filed on the [laravel/framework](http://github.com/laravel/framework) repository.**
-
-### License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
+Note that Laradash is built upon the [Laravel](http://laravel.com/) PHP framework. To learn more about the code structure, please view the [Laravel documentation](laravel.com/docs/).
