@@ -3,7 +3,7 @@ define(['relatedModel'], function(RelatedModel) {
     defaults: {
       name: 'New Tutor',
       email: 'ex@mple.com',
-      password: ''
+      password: 'password'
     }
   });
 });
